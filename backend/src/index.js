@@ -12,6 +12,8 @@ app.use(express.json());
 // 3. LUEGO las rutas
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
+const productoRoutes = require('./routes/productoRoutes');
+app.use('/api/productos', productoRoutes);
 
 // 4. AL FINAL el listen
 const PORT = process.env.PORT || 3000;

@@ -1,17 +1,18 @@
 <template>
   <div class="dashboard-layout">
-    <aside class="sidebar">
+    <nav class="navbar-top">
       <div class="sidebar-logo">MI PROYECTO</div>
-      <nav class="nav-links">
-        <a href="#" class="nav-item active">🏠 Dashboard</a>
-        <a href="#" class="nav-item">👤 Usuarios</a>
-      </nav>
-    </aside>
+      <div class="nav-links-horizontal">
+        <router-link to="/dashboard" class="nav-item active">🏠 Usuarios</router-link>
+        <router-link to="/productos" class="nav-item">📦 Productos</router-link>
+        <router-link to="/facturas" class="nav-item">📑 Facturas</router-link>
+      </div>
+      <button @click="cerrarSesion" class="btn-danger">Cerrar Sesión</button>
+    </nav>
 
     <main class="main-content">
       <header class="top-bar">
         <h2>Listado de Usuarios</h2>
-        <button @click="cerrarSesion" class="btn-danger">Cerrar Sesión</button>
       </header>
 
       <div class="table-card">
@@ -49,7 +50,7 @@ const router = useRouter();
 
 const obtenerUsuarios = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/auth/usuarios'); // <--- Verifica esta URL
+    const res = await axios.get('http://localhost:3000/api/auth/usuarios');
     usuarios.value = res.data;
   } catch (error) {
     console.error("Error al cargar la tabla", error);

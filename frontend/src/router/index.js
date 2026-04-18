@@ -5,13 +5,19 @@ import DashboardView from '../views/DashboardView.vue';
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: LoginView },
-  { path: '/registrar', component: import('../views/RegistroView.vue') },
-  { 
-    path: '/dashboard', 
+  { path: '/registrar', component: () => import('../views/RegistroView.vue') },
+  {
+    path: '/dashboard',
     component: DashboardView,
-    meta: { requiresAuth: true } // <--- Marcamos que esta ruta necesita candado
-  }
-];
+    meta: { requiresAuth: true }
+  }, // <-- Asegúrate de que esta coma esté aquí
+  {
+    path: '/productos',
+    name: 'Productos',
+    component: () => import('../views/ProductosView.vue'),
+    meta: { requiresAuth: true }
+  } 
+]; 
 
 const router = createRouter({
   history: createWebHistory(),

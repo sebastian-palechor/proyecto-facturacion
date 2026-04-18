@@ -1,23 +1,25 @@
 const db = require('../config/db');
 
-// Obtener todos los productos
+// Obtener todos los productos (sin los eliminados)
 exports.obtenerProductos = async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM productos WHERE deleted_at IS NULL');
         res.json(rows);
     } catch (error) {
-        res.status(500).json({ mensaje: "Error al obtener productos", error: error.message });
+        res.status(500).json({ mensaje: "Error al obtener productos" });
     }
 };
 
-// Crear un producto nuevo
+// Guardar un producto nuevo
 exports.crearProducto = async (req, res) => {
     const { nombre, precio, tasa_impuesto, stock } = req.body;
     try {
-        const query = 'INSERT INTO productos (nombre, precio, tasa_impuesto, stock) VALUES (?, ?, ?, ?)';
-        await db.query(query, [nombre, precio, tasa_impuesto, stock]);
-        res.status(201).json({ mensaje: "Producto creado con éxito" });
+        await db.query(
+            'INSERT INTO productos (nombre, precio, tasa_impuesto, stock) VALUES (?, ?, ?, ?)',
+            [nombre, precio, tasa_impuesto, stock]
+        );
+        res.json({ mensaje: "Producto guardado correctamente" });
     } catch (error) {
-        res.status(500).json({ mensaje: "Error al crear producto", error: error.message });
+        res.status(500).json({ mensaje: "Error al guardar el producto" });
     }
 };

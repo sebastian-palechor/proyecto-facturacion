@@ -1,37 +1,40 @@
 <template>
-  <div class="dashboard-container">
-    <header class="header">
-      <h1>Panel de Inscripciones</h1>
-      <button @click="cerrarSesion" class="btn-logout">Cerrar Sesión</button>
-    </header>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">MI PROYECTO</div>
+      <nav class="nav-links">
+        <a href="#" class="nav-item active">🏠 Dashboard</a>
+        <a href="#" class="nav-item">👤 Usuarios</a>
+      </nav>
+    </aside>
 
-    <div class="table-wrapper">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Datos de Inscripción</th>
-            <th>Correo</th>
-            <th>Facultad</th>
-            <th>Rol</th>
-            <th>Fecha Registro</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="usuario in usuarios" :key="usuario.id">
-            <td>{{ usuario.datos_de_inscripcion }}</td>
-            <td>{{ usuario.correo }}</td>
-            <td>{{ usuario.facultad }}</td>
-            <td><span class="badge">{{ usuario.rol }}</span></td>
-            <td>{{ formatearFecha(usuario.created_at) }}</td>
-            <td>
-              <button @click="editar(usuario.id)" class="btn-edit">✏️</button>
-              <button @click="eliminar(usuario.id)" class="btn-delete">🗑️</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <main class="main-content">
+      <header class="top-bar">
+        <h2>Listado de Usuarios</h2>
+        <button @click="cerrarSesion" class="btn-danger">Cerrar Sesión</button>
+      </header>
+
+      <div class="table-card">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Correo</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="u in usuarios" :key="u.id">
+              <td>{{ u.id }}</td>
+              <td>{{ u.correo }}</td>
+              <td>{{ new Date(u.created_at).toLocaleDateString() }}</td>
+              <td>...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -39,6 +42,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import '@/assets/css/dashboard.css';
 
 const usuarios = ref([]);
 const router = useRouter();
@@ -61,16 +65,3 @@ const cerrarSesion = () => {
 
 onMounted(obtenerUsuarios);
 </script>
-
-<style scoped>
-.dashboard-container { padding: 20px; font-family: sans-serif; }
-.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.table-wrapper { overflow-x: auto; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-.data-table { width: 100%; border-collapse: collapse; text-align: left; }
-.data-table th, .data-table td { padding: 12px 15px; border-bottom: 1px solid #eee; }
-.data-table th { background-color: #f8f9fa; color: #333; }
-.badge { background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
-.btn-logout { background: #ff5252; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
-.btn-edit { margin-right: 5px; background: none; border: none; cursor: pointer; }
-.btn-delete { background: none; border: none; cursor: pointer; }
-</style>

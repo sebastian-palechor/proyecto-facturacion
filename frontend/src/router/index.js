@@ -1,42 +1,34 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
-import RegistroView from '../views/RegistroView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import LoginView from '../views/LoginView.vue';
+import DashboardView from '../views/DashboardView.vue';
+
+const routes = [
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: LoginView },
+  { path: '/registrar', component: import('../views/RegistroView.vue') },
+  { 
+    path: '/dashboard', 
+    component: DashboardView,
+    meta: { requiresAuth: true } // <--- Marcamos que esta ruta necesita candado
+  }
+];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/login',
-      name: 'login',
-      component: LoginView
-    },
-    {
-      path: '/registrar',
-      name: 'registrar',
-      component: RegistroView
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('../views/DashboardView.vue'), // Lo crearemos luego
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/',
-      redirect: '/login'
-    }
-  ]
-})
+  history: createWebHistory(),
+  routes
+});
 
-// Navigation Guard: Para proteger las rutas privadas
+// ESTO ES EL GUARDIÁN (Navigation Guard)
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('token')
-  
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    next('/login')
-  } else {
-    next()
-  }
-})
+  const isAuthenticated = localStorage.getItem('token'); // ¿Hay token?
 
-export default router
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    // Si la ruta pide auth y NO hay token, mándalo al login
+    next('/login');
+  } else {
+    // Si todo está bien, déjalo pasar
+    next();
+  }
+});
+
+export default router;

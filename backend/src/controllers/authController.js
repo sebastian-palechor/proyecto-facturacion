@@ -50,3 +50,20 @@ exports.login = async (req, res) => {
         res.status(500).json({ mensaje: "Error en el login", detalle: error.message });
     }
 };
+exports.obtenerTodos = async (req, res) => {
+    try {
+        // Quitamos 'datos_de_inscripcion', 'facultad' y 'rol' si no están en tu DB
+        const [rows] = await db.query(`
+            SELECT 
+                id, 
+                correo, 
+                created_at 
+            FROM usuarios 
+            WHERE deleted_at IS NULL
+        `);
+        res.json(rows);
+    } catch (error) {
+        console.error("Error en el Backend:", error);
+        res.status(500).json({ mensaje: "Error de base de datos" });
+    }
+};

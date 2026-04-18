@@ -102,3 +102,8 @@
     align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+/* En dashboard.css */
+.main-content {
+    padding: 2rem;
+    margin-top: 20px; /* Esto le da aire entre el Navbar y el contenido */
+}

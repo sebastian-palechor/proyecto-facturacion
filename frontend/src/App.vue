@@ -1,32 +1,27 @@
 <template>
-  <nav v-if="authStore.token">
-    <router-link to="/dashboard">Dashboard</router-link> |
-    <button @click="handleLogout">Cerrar Sesión</button>
-  </nav>
-  <nav v-else>
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/registrar">Registro</router-link>
-  </nav>
-
-  <router-view />
+  <div id="app">
+    <Navbar v-if="mostrarNavbar" />
+    
+    <router-view />
+  </div>
 </template>
 
 <script setup>
-import { useAuthStore } from './stores/auth';
-import { useRouter } from 'vue-router';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import Navbar from '@/components/Navbar.vue';
 
-const authStore = useAuthStore();
-const router = useRouter();
+const route = useRoute();
 
-const handleLogout = () => {
-  authStore.logout();
-  router.push('/login');
-};
+// No mostramos el navbar en Login o Registro
+const mostrarNavbar = computed(() => {
+  return route.path !== '/login' && route.path !== '/registrar' && route.path !== '/';
+});
 </script>
 
 <style>
-/* Un estilo básico para que no se vea desordenado */
-nav { padding: 20px; background: #f4f4f4; margin-bottom: 20px; }
-input { display: block; margin: 10px 0; padding: 8px; }
-button { cursor: pointer; background: #42b983; color: white; border: none; padding: 10px; }
+/* Estilos globales para que el contenido no quede pegado al navbar */
+#app {
+  font-family: 'Inter', sans-serif;
+}
 </style>

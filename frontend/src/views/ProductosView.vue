@@ -1,14 +1,8 @@
 <template>
   <div class="dashboard-layout">
-    <nav class="navbar-top">
-      <div class="sidebar-logo">MI PROYECTO</div>
-      <div class="nav-links-horizontal">
-        <router-link to="/dashboard" class="nav-item">🏠 Usuarios</router-link>
-        <router-link to="/productos" class="nav-item active">📦 Productos</router-link>
-        <router-link to="/facturas" class="nav-item">📑 Facturas</router-link>
-      </div>
-      <button @click="cerrarSesion" class="btn-danger">Cerrar Sesión</button>
-    </nav>
+   
+      
+    
 
     <main class="main-content">
       <header class="top-bar">
@@ -51,8 +45,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router';
-import '@/assets/css/dashboard.css';
+import { useRouter } from 'vue-router'; 
+import '@/assets/css/productos.css';
 
 const router = useRouter();
 const productos = ref([]);
@@ -85,9 +79,3 @@ const cerrarSesion = () => {
 onMounted(cargarProductos);
 </script>
 
-<style scoped>
-.form-card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.form-card input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1; }
-.btn-success { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
-.btn-delete { background: none; border: none; cursor: pointer; font-size: 1.2rem; }
-</style>

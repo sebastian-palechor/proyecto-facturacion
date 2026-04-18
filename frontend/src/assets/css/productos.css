@@ -1,0 +1,82 @@
+/* src/assets/css/productos.css */
+
+.productos-container {
+    padding: 2rem;
+}
+
+/* Tarjeta del Formulario */
+.form-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+.form-card input {
+    padding: 0.6rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-card input:focus {
+    outline: none;
+    border-color: #38bdf8;
+    /* Esto crea el efecto de 'anillo' azul transparente */
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.5); 
+}
+
+/* Botones específicos de productos */
+.btn-save {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: background 0.2s;
+}
+
+.btn-save:hover {
+    background-color: #059669;
+}
+
+/* Estilos de la tabla de inventario */
+.stock-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.stock-low {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.stock-ok {
+    background-color: #dcfce7;
+    color: #16a34a;
+}

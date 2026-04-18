@@ -1,15 +1,5 @@
 <template>
   <div class="dashboard-layout">
-    <nav class="navbar-top">
-      <div class="sidebar-logo">MI PROYECTO</div>
-      <div class="nav-links-horizontal">
-        <router-link to="/dashboard" class="nav-item active">🏠 Usuarios</router-link>
-        <router-link to="/productos" class="nav-item">📦 Productos</router-link>
-        <router-link to="/facturas" class="nav-item">📑 Facturas</router-link>
-      </div>
-      <button @click="cerrarSesion" class="btn-danger">Cerrar Sesión</button>
-    </nav>
-
     <main class="main-content">
       <header class="top-bar">
         <h2>Listado de Usuarios</h2>
@@ -43,6 +33,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+// Importante mantener el CSS para la tabla y el layout
 import '@/assets/css/dashboard.css';
 
 const usuarios = ref([]);
@@ -59,10 +50,8 @@ const obtenerUsuarios = async () => {
 
 const formatearFecha = (fecha) => new Date(fecha).toLocaleDateString();
 
-const cerrarSesion = () => {
-  localStorage.removeItem('token');
-  router.push('/login');
-};
+// La función cerrarSesion se queda aquí solo si tienes algún botón 
+// de cerrar sesión extra dentro de esta vista, si no, podrías borrarla.
 
 onMounted(obtenerUsuarios);
 </script>

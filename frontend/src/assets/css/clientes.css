@@ -1,0 +1,173 @@
+/* Contenedor principal que envuelve toda la vista */
+.clientes-page-wrapper {
+    background-color: #f8fafc; /* Gris azulado muy suave */
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* La tarjeta principal blanca */
+.clientes-card-container {
+    background: #ffffff;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+/* Cabecera de la sección */
+.clientes-header {
+    border-bottom: 2px solid #f1f5f9;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.clientes-header h1 {
+    color: #0f172a;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Formulario horizontal moderno */
+.clientes-form-box {
+    background-color: #f1f5f9;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.clientes-form-box h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #475569;
+    font-size: 16px;
+}
+
+.form-flex {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.input-field {
+    flex: 1;
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.input-field input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btn-add-cliente {
+    background-color: #3b82f6;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.btn-add-cliente:hover {
+    background-color: #2563eb;
+}
+
+/* Tabla de clientes */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.clientes-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.clientes-table th {
+    background-color: #f8fafc;
+    padding: 15px;
+    color: #64748b;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #edf2f7;
+}
+
+.clientes-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 15px;
+}
+
+.clientes-table tr:hover {
+    background-color: #fbfcfd;
+}
+
+.id-badge {
+    background: #e2e8f0;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.btn-edit, .btn-delete {
+    padding: 6px 10px;
+    margin: 0 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-edit { background: #fef3c7; }
+.btn-delete { background: #fee2e2; }
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px;
+}
+
+.btn-cancel {
+    background: #94a3b8;
+    color: white;
+    border: none; padding: 10px; border-radius: 6px; cursor: pointer;
+}

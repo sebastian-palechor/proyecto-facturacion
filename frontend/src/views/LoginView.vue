@@ -2,8 +2,9 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import '@/assets/css/login.css'; // Importamos el diseño profesional
 
-const correo = ref('');
+const email = ref(''); // Usamos email para que coincida con el v-model del input
 const password = ref('');
 const mensaje = ref('');
 const router = useRouter();
@@ -11,29 +12,60 @@ const router = useRouter();
 const handleLogin = async () => {
   try {
     const res = await axios.post('http://localhost:3000/api/auth/login', {
-      correo: correo.value,
+      correo: email.value,
       password: password.value
     });
 
-    // Guardamos el token para que el sistema sepa que estamos logueados
+    // Guardamos el token para la sesión
     localStorage.setItem('token', res.data.token);
     
-    // Nos vamos al Dashboard
+    // Redirigimos al Dashboard
     router.push('/dashboard');
   } catch (error) {
-    mensaje.value = "Error: " + (error.response?.data.mensaje || "Credenciales incorrectas");
+    // Mostramos el error de forma más elegante
+    mensaje.value = error.response?.data?.mensaje || "Credenciales incorrectas";
   }
 };
 </script>
 
 <template>
-  <div>
-    <h2>Iniciar Sesión</h2>
-    <form @submit.prevent="handleLogin">
-      <input v-model="correo" type="email" placeholder="Correo" required />
-      <input v-model="password" type="password" placeholder="Contraseña" required />
-      <button type="submit">Entrar</button>
-    </form>
-    <p v-if="mensaje">{{ mensaje }}</p>
+  <div class="login-container">
+    <div class="login-card">
+      <h1>Facturacion</h1>
+      <p>Ingresa a tu cuenta para gestionar ventas</p>
+
+      <form @submit.prevent="handleLogin">
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input 
+            type="email" 
+            v-model="email" 
+            placeholder="ejemplo@correo.com" 
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input 
+            type="password" 
+            v-model="password" 
+            placeholder="••••••••" 
+            required 
+          />
+        </div>
+
+        <button type="submit" class="btn-login">Iniciar Sesión</button>
+      </form>
+
+      <p v-if="mensaje" style="color: #ef4444; margin-top: 1rem; font-weight: 600;">
+        {{ mensaje }}
+      </p>
+
+      <div class="register-link">
+        ¿No tienes una cuenta? 
+        <router-link to="/registrar">Regístrate aquí</router-link>
+      </div>
+    </div>
   </div>
 </template>

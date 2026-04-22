@@ -14,6 +14,8 @@ const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 const productoRoutes = require('./routes/productoRoutes');
 app.use('/api/productos', productoRoutes);
+const clienteRoutes = require('./routes/clienteRoutes');
+app.use('/api/clientes', clienteRoutes);
 
 // 4. AL FINAL el listen
 const PORT = process.env.PORT || 3000;

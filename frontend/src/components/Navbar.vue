@@ -4,7 +4,9 @@
     <ul class="nav-links">
       <li><router-link to="/dashboard" class="nav-item">Usuarios</router-link></li>
       <li><router-link to="/productos" class="nav-item">Productos</router-link></li>
+       <li><router-link to="/clientes" class="nav-item">Clientes</router-link></li>
       <li><router-link to="/facturas" class="nav-item">Facturas</router-link></li>
+            
     </ul>
     <div class="nav-actions">
       <button @click="cerrarSesion" class="btn-logout">Cerrar Sesión</button>

@@ -1,0 +1,64 @@
+/* src/assets/css/facturas.css */
+
+.factura-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Buscador de productos */
+.search-box {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Tabla de items de la factura */
+.items-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 400px;
+}
+
+/* Resumen lateral (El Ticket) */
+.resumen-card {
+    background: #1e293b;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    position: sticky;
+    top: 20px;
+}
+
+.total-row {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+    border-top: 1px solid #334155;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-finalizar {
+    width: 100%;
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+}

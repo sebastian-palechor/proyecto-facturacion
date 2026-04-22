@@ -16,7 +16,25 @@ const routes = [
     name: 'Productos',
     component: () => import('../views/ProductosView.vue'),
     meta: { requiresAuth: true }
-  } 
+  },
+
+  {
+  path: '/facturas',
+  name: 'facturas',
+  // Se cambió FacturasView:vue por FacturasView.vue
+  component: () => import('../views/FacturasView.vue'), 
+  meta: { requiresAuth: true }
+},
+
+ {
+  path: '/clientes',
+  name: 'Clientes',
+  // Se cambió FacturasView:vue por FacturasView.vue
+  component: () => import('../views/ClientesView.vue'), 
+  meta: { requiresAuth: true }
+}
+
+  
 ]; 
 
 const router = createRouter({

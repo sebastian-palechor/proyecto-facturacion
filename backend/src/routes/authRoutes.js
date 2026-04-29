@@ -1,11 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const authController = require('../controllers/authController');
-const { validarUsuario } = require('../middleware/validador');
+import express from 'express';
+// Importamos todo el controlador como un objeto
+import * as authController from '../controllers/authController.js'; 
+// Importamos el middleware (asegúrate de poner el .js)
+import { validarUsuario } from '../middleware/validador.js';
 
-// Rutas protegidas por el validador de Zod
+const router = express.Router();
+
+// Las rutas ahora usan las funciones que exportamos en el controlador
 router.post('/registrar', validarUsuario, authController.registrar);
 router.post('/login', validarUsuario, authController.login);
 router.get('/usuarios', authController.obtenerTodos);
 
-module.exports = router;
+export default router;

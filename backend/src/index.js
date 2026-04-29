@@ -1,24 +1,22 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import authRoutes from './routes/authRoutes.js';
+import clienteRoutes from './routes/clienteRoutes.js';
+import facturaRoutes from './routes/facturaRoutes.js';
+import productoRoutes from './routes/productoRoutes.js';
 
-// 1. PRIMERO creas la app
-const app = express(); 
+const app = express();
 
-// 2. DESPUÉS usas los middleware
 app.use(cors());
 app.use(express.json());
 
-// 3. LUEGO las rutas
-const authRoutes = require('./routes/authRoutes');
+// Registro de las 4 Rutas Profesionales
 app.use('/api/auth', authRoutes);
-const productoRoutes = require('./routes/productoRoutes');
-app.use('/api/productos', productoRoutes);
-const clienteRoutes = require('./routes/clienteRoutes');
 app.use('/api/clientes', clienteRoutes);
+app.use('/api/facturas', facturaRoutes);
+app.use('/api/productos', productoRoutes);
 
-// 4. AL FINAL el listen
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });

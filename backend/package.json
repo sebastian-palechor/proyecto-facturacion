@@ -10,9 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",  
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.1"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

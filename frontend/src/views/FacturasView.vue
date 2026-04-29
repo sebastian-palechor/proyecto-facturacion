@@ -142,9 +142,35 @@ const calcularTotal = computed(() => {
   return carrito.value.reduce((acc, item) => acc + (item.cantidad * item.precio), 0);
 });
 
-const generarFactura = () => {
-  const cliente = clientes.value.find(c => c.id == clienteSeleccionado.value);
-  alert(`Factura generada para ${cliente.nombre} por un total de $${calcularTotal.value.toFixed(2)}`);
+const generarFactura = async () => {
+  // Validación básica
+  if (!clienteSeleccionado.value) return alert("Selecciona un cliente");
+  if (carrito.value.length === 0) return alert("El carrito está vacío");
+
+  const datosVenta = {
+    cliente_id: clienteSeleccionado.value,
+    total: calcularTotal.value,
+    productos: carrito.value 
+  };
+
+  try {
+    const res = await axios.post('http://localhost:3000/api/facturas/finalizar', datosVenta);
+    
+    alert("✅ " + res.data.mensaje);
+
+    // LIMPIEZA
+    carrito.value = []; // Vacía la tabla de la factura
+    clienteSeleccionado.value = ''; // Resetea el cliente
+    
+    // IMPORTANTE: Volver a cargar productos para ver el stock actualizado en el selector
+    cargarProductos(); 
+
+  } catch (error) {
+    // Esto te dirá el error real que manda el servidor
+    console.error(error);
+    alert("❌ Error: " + (error.response?.data?.error || "Error desconocido"));
+  }
+  
 };
 </script>
 

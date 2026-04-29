@@ -1,20 +1,15 @@
-const { z } = require('zod');
+// src/middleware/validador.js
 
-// Esquema para validar Registro y Login
-const esquemaUsuario = z.object({
-  correo: z.string().email({ message: "Correo electrónico inválido" }),
-  password: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres" })
-});
+export const validarUsuario = (req, res, next) => {
+    const { correo, password } = req.body;
 
-const validarUsuario = (req, res, next) => {
-  try {
-    esquemaUsuario.parse(req.body);
+    // Validación simple
+    if (!correo || !password) {
+        return res.status(400).json({ 
+            mensaje: "Faltan datos obligatorios: correo y password" 
+        });
+    }
+
+    // Si todo está bien, pasamos al siguiente paso (el controlador)
     next();
-  } catch (error) {
-    return res.status(400).json({ 
-      errores: error.errors.map(err => ({ campo: err.path[0], mensaje: err.message })) 
-    });
-  }
 };
-
-module.exports = { validarUsuario };

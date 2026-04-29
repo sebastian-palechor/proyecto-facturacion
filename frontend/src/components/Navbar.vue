@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar">
-    <div class="nav-brand">FacturaPro</div>
+    <div class="nav-brand">Facturacion</div>
     <ul class="nav-links">
       <li><router-link to="/dashboard" class="nav-item">Usuarios</router-link></li>
       <li><router-link to="/productos" class="nav-item">Productos</router-link></li>

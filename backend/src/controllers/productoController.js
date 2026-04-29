@@ -1,25 +1,10 @@
-const db = require('../config/db');
+import * as productoModel from "../models/productoModel.js";
 
-// Obtener todos los productos (sin los eliminados)
-exports.obtenerProductos = async (req, res) => {
+export const listarProductos = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM productos WHERE deleted_at IS NULL');
-        res.json(rows);
+        const productos = await productoModel.obtenerTodos();
+        res.json(productos);
     } catch (error) {
-        res.status(500).json({ mensaje: "Error al obtener productos" });
-    }
-};
-
-// Guardar un producto nuevo
-exports.crearProducto = async (req, res) => {
-    const { nombre, precio, tasa_impuesto, stock } = req.body;
-    try {
-        await db.query(
-            'INSERT INTO productos (nombre, precio, tasa_impuesto, stock) VALUES (?, ?, ?, ?)',
-            [nombre, precio, tasa_impuesto, stock]
-        );
-        res.json({ mensaje: "Producto guardado correctamente" });
-    } catch (error) {
-        res.status(500).json({ mensaje: "Error al guardar el producto" });
+        res.status(500).json({ error: "Error al obtener productos" });
     }
 };

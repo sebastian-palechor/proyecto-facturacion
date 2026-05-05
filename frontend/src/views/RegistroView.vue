@@ -1,94 +1,71 @@
-<template>
-  <div class="login-container"> <div class="login-card">     <h1>Crear Cuenta</h1>
-      <p>Regístrate para empezar a facturar</p>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+// Importamos nuestra instancia de API con interceptores y el store si fuera necesario
+import api from '@/api/axios'; 
+import '@/assets/css/login.css'; // Reutilizamos estilos de login
 
-      <form @submit.prevent="handleRegistro">
+const email = ref('');
+const password = ref('');
+const mensaje = ref('');
+const router = useRouter();
+
+const handleRegister = async () => {
+  try {
+    const res = await api.post('/auth/registrar', {
+      correo: email.value,
+      password: password.value
+    });
+
+    // Si el registro es exitoso, mandamos al login
+    alert("Usuario registrado con éxito");
+    router.push('/login');
+  } catch (error) {
+    // Aquí capturamos los errores de validación (como los que configuramos en el middleware)
+    mensaje.value = error.response?.data?.mensaje || "Error al registrar usuario";
+  }
+};
+</script>
+
+<template>
+  <div class="login-container">
+    <div class="login-card">
+      <h1>Registro</h1>
+      <p>Crea una cuenta para empezar a facturar</p>
+
+      <form @submit.prevent="handleRegister">
         <div class="form-group">
           <label>Correo Electrónico</label>
           <input 
-            v-model="correo" 
             type="email" 
+            v-model="email" 
             placeholder="ejemplo@correo.com" 
             required 
           />
         </div>
 
         <div class="form-group">
-          <label>Contraseña</label>
+          <label>Contraseña (mínimo 8 caracteres)</label>
           <input 
-            v-model="password" 
             type="password" 
-            placeholder="Crea una contraseña segura" 
+            v-model="password" 
+            placeholder="••••••••" 
+            minlength="8"
             required 
           />
         </div>
 
-        <button type="submit" class="btn-login">Crear Cuenta</button>
+        <button type="submit" class="btn-login">Registrarse</button>
       </form>
 
-      <p v-if="mensaje" :class="mensaje.includes('éxito') ? 'msg-success' : 'msg-error'">
+      <p v-if="mensaje" style="color: #ef4444; margin-top: 1rem; font-weight: 600;">
         {{ mensaje }}
       </p>
 
       <div class="register-link">
-        ¿Ya tienes una cuenta? 
+        ¿Ya tienes cuenta? 
         <router-link to="/login">Inicia sesión aquí</router-link>
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import '@/assets/css/login.css'; // Importante para que use el nuevo diseño
-
-const correo = ref('');
-const password = ref('');
-const mensaje = ref('');
-
-const handleRegistro = async () => {
-  try {
-    const res = await axios.post('http://localhost:3000/api/auth/registrar', {
-      correo: correo.value,
-      password: password.value
-    });
-    mensaje.value = "¡Registro exitoso! Ya puedes iniciar sesión.";
-  } catch (error) {
-    mensaje.value = error.response 
-      ? "Error: " + error.response.data.mensaje 
-      : "Error: No se pudo conectar con el servidor.";
-  }
-};
-</script>
-
-<style scoped>
-/* Unos toques extra para los mensajes de error/éxito */
-.msg-success { color: #10b981; margin-top: 1rem; font-weight: 600; }
-.msg-error { color: #ef4444; margin-top: 1rem; font-weight: 600; }
-</style>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-
-const correo = ref('');
-const password = ref('');
-const mensaje = ref('');
-
-// Busca la función handleRegistro y cámbiala por esta:
-const handleRegistro = async () => {
-  try {
-    const res = await axios.post('http://localhost:3000/api/auth/registrar', {
-      correo: correo.value,
-      password: password.value
-    });
-    mensaje.value = "¡Registro exitoso! Ya puedes iniciar sesión.";
-  } catch (error) {
-    // Esta es la parte importante para evitar el error de la consola
-    mensaje.value = error.response 
-      ? "Error: " + error.response.data.mensaje 
-      : "Error: No se pudo conectar con el servidor. ¿Está encendido el backend?";
-  }
-};
-</script>

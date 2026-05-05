@@ -1,15 +1,12 @@
 <template>
   <div class="dashboard-layout">
-   
-      
-    
-
     <main class="main-content">
       <header class="top-bar">
         <h2>Gestión de Inventario</h2>
       </header>
 
       <div class="form-card">
+        <!-- Los placeholders ahora serán visibles porque el valor inicial no es 0 -->
         <input v-model="nuevoProducto.nombre" placeholder="Nombre del producto" />
         <input v-model.number="nuevoProducto.precio" type="number" placeholder="Precio" />
         <input v-model.number="nuevoProducto.stock" type="number" placeholder="Stock inicial" />
@@ -50,7 +47,9 @@ import '@/assets/css/productos.css';
 
 const router = useRouter();
 const productos = ref([]);
-const nuevoProducto = ref({ nombre: '', precio: 0, stock: 0 });
+
+// Modificado: Se inicializa con null para que los inputs numéricos aparezcan vacíos
+const nuevoProducto = ref({ nombre: '', precio: null, stock: null });
 
 const cargarProductos = async () => {
   try {
@@ -64,7 +63,10 @@ const cargarProductos = async () => {
 const guardarProducto = async () => {
   try {
     await axios.post('http://localhost:3000/api/productos', nuevoProducto.value);
-    nuevoProducto.value = { nombre: '', precio: 0, stock: 0 }; // Limpiar formulario
+    
+    // Modificado: Al limpiar el formulario usamos null para que vuelvan a aparecer los placeholders
+    nuevoProducto.value = { nombre: '', precio: null, stock: null };
+    
     cargarProductos(); // Recargar tabla
   } catch (error) {
     alert("Error al guardar");
@@ -78,4 +80,3 @@ const cerrarSesion = () => {
 
 onMounted(cargarProductos);
 </script>
-

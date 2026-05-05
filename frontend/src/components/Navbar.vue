@@ -6,7 +6,7 @@
       <li><router-link to="/productos" class="nav-item">Productos</router-link></li>
        <li><router-link to="/clientes" class="nav-item">Clientes</router-link></li>
       <li><router-link to="/facturas" class="nav-item">Facturas</router-link></li>
-      <li><router-link to="/historial" class="nav-item">historias</router-link></li>
+      <li><router-link to="/historial" class="nav-item">Historial</router-link></li>
       
             
     </ul>

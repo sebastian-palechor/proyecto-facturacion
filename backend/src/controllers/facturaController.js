@@ -15,11 +15,12 @@ export const crearFactura = async (req, res) => {
     }
 };
 
-export const listarDetalles = (req, res) => {
-    facturaModel.getDetalleCompleto((err, results) => {
-        if (err) {
-            return res.status(500).json({ error: "Error al obtener historial" });
-        }
+export const listarDetalles = async (req, res) => {
+    try {
+        const results = await facturaModel.getDetalleCompleto();
         res.json(results);
-    });
+    } catch (error) {
+        console.error("Error en listarDetalles:", error);
+        res.status(500).json({ error: "Error al obtener historial" });
+    }
 };

@@ -1,12 +1,12 @@
 import pool from "../config/db.js";
 
 export const insertarFactura = async (cliente_id, total) => {
-    const iva = totalSinIva * 0.19;
-    const totalConIva = totalSinIva + iva;
-const [result] = await pool.query(
-    "INSERT INTO facturas (cliente_id, total, fecha) VALUES (?, ?, NOW())",
-    [cliente_id, total]
-);
+    // Calculamos el total con IVA si el 'total' recibido es el neto
+    // Si el 'total' ya trae el IVA desde el frontend, quita este cálculo
+    const [result] = await pool.query(
+        "INSERT INTO facturas (cliente_id, total, fecha) VALUES (?, ?, NOW())",
+        [cliente_id, total]
+    );
     return result.insertId;
 };
 
@@ -16,7 +16,8 @@ export const insertarDetalle = async (facturaId, prod) => {
         [facturaId, prod.id, prod.cantidad, prod.precio]
     );
 };
-export const getDetalleCompleto = (callback) => {
+
+export const getDetalleCompleto = async () => {
     const query = `
         SELECT 
             fd.id AS id_detalle,
@@ -36,11 +37,7 @@ export const getDetalleCompleto = (callback) => {
         ORDER BY f.id DESC
     `;
     
-    pool.query(query, (err, results) => {
-        if (err) {
-            console.error("Error en la consulta SQL:", err);
-            return callback(err, null);
-        }
-        callback(null, results);
-    });
+    // Usamos await porque el pool es de tipo promesa
+    const [results] = await pool.query(query);
+    return results;
 };

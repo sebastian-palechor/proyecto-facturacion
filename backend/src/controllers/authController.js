@@ -24,13 +24,23 @@ export const login = async (req, res) => {
         const validPassword = await bcrypt.compare(password, usuario.password);
         if (!validPassword) return res.status(401).json({ mensaje: "Contraseña incorrecta" });
 
-        const token = jwt.sign({ id: usuario.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, mensaje: "Bienvenido" });
+        // MODIFICACIÓN: Incluimos el ROL en el payload del token
+        const token = jwt.sign(
+            { id: usuario.id, rol: usuario.rol }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        );
+
+        // También enviamos los datos del usuario para que Pinia los guarde
+        res.json({ 
+            token, 
+            usuario: { id: usuario.id, correo: usuario.correo, rol: usuario.rol },
+            mensaje: "Bienvenido" 
+        });
     } catch (error) {
         res.status(500).json({ mensaje: "Error en el login", detalle: error.message });
     }
 };
-
 export const obtenerTodos = async (req, res) => {
     try {
         const usuarios = await authModel.listarUsuarios();

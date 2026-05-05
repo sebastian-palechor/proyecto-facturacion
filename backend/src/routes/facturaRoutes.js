@@ -1,8 +1,9 @@
 import express from "express";
-import { crearFactura } from "../controllers/facturaController.js";
+import { crearFactura, listarDetalles } from "../controllers/facturaController.js";
 
 const router = express.Router();
 
 router.post("/finalizar", crearFactura);
+router.get('/historial', listarDetalles);
 
 export default router;

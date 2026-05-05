@@ -1,4 +1,4 @@
-/* src/assets/css/productos.css */
+
 
 .productos-container {
     padding: 2rem;
@@ -42,7 +42,6 @@
 .form-card input:focus {
     outline: none;
     border-color: #38bdf8;
-    /* Esto crea el efecto de 'anillo' azul transparente */
     box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.5); 
 }
 
@@ -79,4 +78,49 @@
 .stock-ok {
     background-color: #dcfce7;
     color: #16a34a;
+}
+/* Contenedor del formulario */
+.form-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Estilo para los inputs */
+.custom-input {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex: 1;
+    outline: none;
+}
+
+.custom-input:focus {
+    border-color: #34495e;
+}
+
+/* Botón Guardar */
+.btn-success {
+    background-color: #3b82f6;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+
+}
+
+.btn-save:hover {
+    background-color: #8ab9e7;
 }

@@ -61,7 +61,16 @@
         
         <div class="resumen-detalle">
           <p>Items: {{ carrito.length }}</p>
-          <div class="total-row">
+          <div class="total-row small">
+            <span>Subtotal:</span>
+            <span>${{ calcularSubtotal.toFixed(2) }}</span>
+          </div>
+          <div class="total-row small">
+            <span>IVA (19%):</span>
+            <span>${{ calcularIVA.toFixed(2) }}</span>
+          </div>
+          <hr />
+          <div class="total-row grand-total">
             <span>TOTAL:</span>
             <span>${{ calcularTotal.toFixed(2) }}</span>
           </div>
@@ -72,21 +81,77 @@
         </button>
       </aside>
     </div>
+
+    <div v-if="mostrarModal" class="modal-overlay">
+      <div class="modal-content" id="factura-a-imprimir">
+        <div class="modal-header">
+          <h1 style="margin:0">RESTAURANTE TEST</h1>
+          <p>NIT: 900.123.456-1</p>
+          <p>Bogotá, Colombia</p>
+          <hr>
+          <h3>COMPROBANTE DE VENTA</h3>
+        </div>
+        
+        <div class="modal-body">
+          <p><strong>Cliente:</strong> {{ clienteFactura }}</p>
+          <p><strong>Fecha:</strong> {{ fechaFactura }}</p>
+          
+          <table class="tabla-modal">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Cant.</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in facturaReciente" :key="item.id">
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ (item.cantidad * item.precio).toFixed(2) }}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <hr>
+          <div class="resumen-final">
+            <div class="total-row"><span>Subtotal:</span> <span>${{ subtotalFinal.toFixed(2) }}</span></div>
+            <div class="total-row"><span>IVA (19%):</span> <span>${{ ivaFinal.toFixed(2) }}</span></div>
+            <div class="total-row" style="font-weight:bold; font-size:1.2em;">
+              <span>TOTAL PAGADO:</span> <span>${{ totalFinal.toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button @click="imprimir" class="btn-print">🖨️ Imprimir</button>
+          <button @click="cerrarModal" class="btn-close">Cerrar y Nueva Venta</button>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
-import '@/assets/css/dashboard.css';
 import '@/assets/css/facturas.css';
 
+// Referencias de datos
 const productosDisponibles = ref([]);
 const carrito = ref([]);
 const clientes = ref([]);
 const clienteSeleccionado = ref(''); 
 
-// Carga inicial de datos
+// Referencias para el Modal
+const mostrarModal = ref(false);
+const facturaReciente = ref([]);
+const clienteFactura = ref('');
+const fechaFactura = ref('');
+const subtotalFinal = ref(0);
+const ivaFinal = ref(0);
+const totalFinal = ref(0);
+
 onMounted(async () => {
   cargarProductos();
   cargarClientes();
@@ -96,59 +161,51 @@ const cargarClientes = async () => {
   try {
     const res = await axios.get('http://localhost:3000/api/clientes');
     clientes.value = res.data;
-  } catch (error) {
-    console.error("Error al cargar clientes:", error);
-  }
+  } catch (error) { console.error("Error clientes:", error); }
 };
 
 const cargarProductos = async () => {
   try {
     const res = await axios.get('http://localhost:3000/api/productos');
     productosDisponibles.value = res.data;
-  } catch (error) {
-    console.error("Error al cargar productos", error);
-  }
+  } catch (error) { console.error("Error productos:", error); }
 };
 
-// Obtener el nombre del cliente seleccionado para mostrarlo en el resumen
+// Cálculos de IVA y Totales
+const calcularSubtotal = computed(() => {
+  return carrito.value.reduce((acc, item) => acc + (item.cantidad * item.precio), 0);
+});
+const calcularIVA = computed(() => calcularSubtotal.value * 0.19);
+const calcularTotal = computed(() => calcularSubtotal.value + calcularIVA.value);
+
 const nombreClienteActivo = computed(() => {
   if (!clienteSeleccionado.value) return "No seleccionado";
   const cliente = clientes.value.find(c => c.id == clienteSeleccionado.value);
   return cliente ? cliente.nombre : "No seleccionado";
 });
 
+// Funciones del Carrito
 const agregarAlCarrito = (id) => {
   if (!id) return;
   const prod = productosDisponibles.value.find(p => p.id == id);
   const existe = carrito.value.find(item => item.id == id);
-  
   if (existe) {
     existe.cantidad++;
   } else {
-    carrito.value.push({
-      id: prod.id,
-      nombre: prod.nombre,
-      precio: prod.precio,
-      cantidad: 1
-    });
+    carrito.value.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, cantidad: 1 });
   }
 };
 
-const quitarDelCarrito = (index) => {
-  carrito.value.splice(index, 1);
-};
+const quitarDelCarrito = (index) => { carrito.value.splice(index, 1); };
 
-const calcularTotal = computed(() => {
-  return carrito.value.reduce((acc, item) => acc + (item.cantidad * item.precio), 0);
-});
-
+// Lógica de Finalización
 const generarFactura = async () => {
-  // Validación básica
-  if (!clienteSeleccionado.value) return alert("Selecciona un cliente");
-  if (carrito.value.length === 0) return alert("El carrito está vacío");
+  if (!clienteSeleccionado.value || carrito.value.length === 0) return;
 
   const datosVenta = {
     cliente_id: clienteSeleccionado.value,
+    subtotal: calcularSubtotal.value,
+    iva: calcularIVA.value,
     total: calcularTotal.value,
     productos: carrito.value 
   };
@@ -156,26 +213,29 @@ const generarFactura = async () => {
   try {
     const res = await axios.post('http://localhost:3000/api/facturas/finalizar', datosVenta);
     
-    alert("✅ " + res.data.mensaje);
-
-    // LIMPIEZA
-    carrito.value = []; // Vacía la tabla de la factura
-    clienteSeleccionado.value = ''; // Resetea el cliente
+    // Preparar datos para el Modal
+    facturaReciente.value = [...carrito.value];
+    clienteFactura.value = nombreClienteActivo.value;
+    fechaFactura.value = new Date().toLocaleString();
+    subtotalFinal.value = calcularSubtotal.value;
+    ivaFinal.value = calcularIVA.value;
+    totalFinal.value = calcularTotal.value;
     
-    // IMPORTANTE: Volver a cargar productos para ver el stock actualizado en el selector
-    cargarProductos(); 
+    // Mostrar Modal
+    mostrarModal.value = true;
 
   } catch (error) {
-    // Esto te dirá el error real que manda el servidor
-    console.error(error);
-    alert("❌ Error: " + (error.response?.data?.error || "Error desconocido"));
+    alert("❌ Error: " + (error.response?.data?.error || "Error al procesar la venta"));
   }
-  
+};
+
+const imprimir = () => { window.print(); };
+
+const cerrarModal = () => {
+  mostrarModal.value = false;
+  // Limpiar vista principal para la siguiente factura
+  carrito.value = [];
+  clienteSeleccionado.value = '';
+  cargarProductos(); // Refrescar stock
 };
 </script>
-
-<style scoped>
-.cant-input { width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
-.custom-select { width: 100%; padding: 10px; border-radius: 5px; margin-top: 5px; background-color: white; border: 1px solid #ddd; }
-.form-group label { font-weight: bold; font-size: 0.9rem; color: #555; }
-</style>

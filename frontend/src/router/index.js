@@ -10,7 +10,7 @@ const routes = [
     path: '/dashboard',
     component: DashboardView,
     meta: { requiresAuth: true }
-  }, // <-- Asegúrate de que esta coma esté aquí
+  }, 
   {
     path: '/productos',
     name: 'Productos',
@@ -21,7 +21,6 @@ const routes = [
   {
   path: '/facturas',
   name: 'facturas',
-  // Se cambió FacturasView:vue por FacturasView.vue
   component: () => import('../views/FacturasView.vue'), 
   meta: { requiresAuth: true }
 },
@@ -29,8 +28,14 @@ const routes = [
  {
   path: '/clientes',
   name: 'Clientes',
-  // Se cambió FacturasView:vue por FacturasView.vue
   component: () => import('../views/ClientesView.vue'), 
+  meta: { requiresAuth: true }
+},
+
+{
+  path: '/historial',
+  name: 'Historial',
+  component: () => import('../views/ListaFacturas.vue'), 
   meta: { requiresAuth: true }
 }
 
@@ -42,15 +47,15 @@ const router = createRouter({
   routes
 });
 
-// ESTO ES EL GUARDIÁN (Navigation Guard)
+
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('token'); // ¿Hay token?
+  const isAuthenticated = localStorage.getItem('token'); // 
 
   if (to.meta.requiresAuth && !isAuthenticated) {
-    // Si la ruta pide auth y NO hay token, mándalo al login
+    
     next('/login');
   } else {
-    // Si todo está bien, déjalo pasar
+    
     next();
   }
 });

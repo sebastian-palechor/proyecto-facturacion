@@ -33,7 +33,6 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-// Importante mantener el CSS para la tabla y el layout
 import '@/assets/css/dashboard.css';
 
 const usuarios = ref([]);

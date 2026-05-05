@@ -2,9 +2,8 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import '@/assets/css/login.css'; // Importamos el diseño profesional
-
-const email = ref(''); // Usamos email para que coincida con el v-model del input
+import '@/assets/css/login.css';
+const email = ref(''); 
 const password = ref('');
 const mensaje = ref('');
 const router = useRouter();
@@ -16,13 +15,11 @@ const handleLogin = async () => {
       password: password.value
     });
 
-    // Guardamos el token para la sesión
+    
     localStorage.setItem('token', res.data.token);
     
-    // Redirigimos al Dashboard
     router.push('/dashboard');
   } catch (error) {
-    // Mostramos el error de forma más elegante
     mensaje.value = error.response?.data?.mensaje || "Credenciales incorrectas";
   }
 };

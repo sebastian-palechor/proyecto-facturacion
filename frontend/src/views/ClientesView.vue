@@ -86,9 +86,6 @@ const listaClientes = ref([]);
 const editando = ref(false);
 const clienteEditado = ref({ id: null, nombre: '', telefono: '' });
 
-// --- MÉTODOS ---
-
-// Obtener lista
 const cargarClientes = async () => {
   try {
     const res = await axios.get('http://localhost:3000/api/clientes');

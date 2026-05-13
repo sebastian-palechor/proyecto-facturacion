@@ -29,13 +29,13 @@
             </thead>
             <tbody>
               <tr v-for="(item, index) in carrito" :key="index">
-                <td>{{ item.nombre }}</td>
-                <td>
+                <td data-label="PRODUCTO">{{ item.nombre }}</td>
+                <td data-label="CANT.">
                   <input type="number" v-model.number="item.cantidad" min="1" class="cant-input" />
                 </td>
-                <td>${{ item.precio }}</td>
-                <td>${{ (item.cantidad * item.precio).toFixed(2) }}</td>
-                <td>
+                <td data-label="PRECIO">${{ item.precio }}</td>
+                <td data-label="SUBTOTAL">${{ (item.cantidad * item.precio).toFixed(2) }}</td>
+                <td data-label="ACCIONES">
                   <button @click="quitarDelCarrito(index)" class="btn-delete">❌</button>
                 </td>
               </tr>
@@ -47,16 +47,19 @@
       <aside class="resumen-card">
         <h3>Resumen</h3>
         
-        <div class="form-group" style="margin-bottom: 15px;">
-          <label>Cliente</label>
-          <select v-model="clienteSeleccionado" class="custom-select">
-            <option disabled value="">Seleccione un cliente</option>
-            <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">
-              {{ cliente.nombre }} </option>
-          </select>
+        <div class="search-box">
+          <label class="form-label">Seleccionar Cliente</label>
+          <div class="select-wrapper">
+            <select v-model="clienteSeleccionado" class="custom-select select-primary">
+              <option value="" disabled selected>Seleccione un cliente...</option>
+              <option v-for="c in clientes" :key="c.id" :value="c.id">
+                {{ c.nombre }}
+              </option>
+            </select>
+          </div>
         </div>
 
-        <p>Cliente: <strong>{{ nombreClienteActivo }}</strong></p>
+        <p style="margin-top: 15px;">Cliente: <strong>{{ nombreClienteActivo }}</strong></p>
         <hr />
         
         <div class="resumen-detalle">
@@ -105,10 +108,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in facturaReciente" :key="item.id">
-                <td>{{ item.nombre }}</td>
-                <td>{{ item.cantidad }}</td>
-                <td>${{ (item.cantidad * item.precio).toFixed(2) }}</td>
+              <tr v-for="(item, index) in facturaReciente" :key="index">
+                <td data-label="PRODUCTO">{{ item.nombre }}</td>
+                <td data-label="CANT.">{{ item.cantidad }}</td>
+                <td data-label="SUBTOTAL">${{ (item.cantidad * item.precio).toFixed(2) }}</td>
               </tr>
             </tbody>
           </table>

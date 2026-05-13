@@ -1,7 +1,6 @@
 <template>
   <div class="clientes-page-wrapper">
     <div class="clientes-card-container">
-      
       <header class="clientes-header">
         <h1>Gestión de Clientes</h1>
       </header>
@@ -33,22 +32,18 @@
           </thead>
           <tbody>
             <tr v-for="cliente in listaClientes" :key="cliente.id">
-              <td><span class="id-badge">#{{ cliente.id }}</span></td>
-              <td class="font-medium">{{ cliente.nombre }}</td>
-              <td>{{ cliente.telefono }}</td>
-              <td class="text-center">
-                <button @click="prepararEdicion(cliente)" class="btn-action edit" title="Editar">✏️</button>
-                <button @click="eliminarCliente(cliente.id)" class="btn-action delete" title="Eliminar">🗑️</button>
+              <td data-label="ID"><span class="id-badge">#{{ cliente.id }}</span></td>
+              <td data-label="Nombre" class="font-medium">{{ cliente.nombre }}</td>
+              <td data-label="Teléfono">{{ cliente.telefono }}</td>
+              <td data-label="Acciones" class="text-center">
+                <button @click="prepararEdicion(cliente)" class="btn-action edit">✏️</button>
+                <button @click="eliminarCliente(cliente.id)" class="btn-action delete">🗑️</button>
               </td>
             </tr>
           </tbody>
         </table>
       </section>
-
-      <p v-if="mensaje" class="status-msg">
-        {{ mensaje }}
-      </p>
-
+      <p v-if="mensaje" class="status-msg">{{ mensaje }}</p>
     </div>
 
     <div v-if="editando" class="modal-overlay">
@@ -78,7 +73,6 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import '@/assets/css/clientes.css'; 
 
-// --- ESTADO ---
 const nombre = ref('');
 const telefono = ref('');
 const mensaje = ref('');
@@ -86,65 +80,73 @@ const listaClientes = ref([]);
 const editando = ref(false);
 const clienteEditado = ref({ id: null, nombre: '', telefono: '' });
 
+const API_URL = 'http://localhost:3000/api/clientes';
+
+const getAuthHeader = () => {
+  const token = localStorage.getItem('token');
+  return { headers: { Authorization: `Bearer ${token}` } };
+};
+
 const cargarClientes = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/clientes');
+    const res = await axios.get(API_URL, getAuthHeader());
     listaClientes.value = res.data;
   } catch (error) {
-    console.error("Error al cargar clientes:", error);
+    console.error("Error al cargar:", error);
   }
 };
 
-// Crear
 const handleRegistroCliente = async () => {
   try {
-    await axios.post('http://localhost:3000/api/clientes/registrar', {
+    await axios.post(API_URL, {
       nombre: nombre.value,
       telefono: telefono.value
-    });
+    }, getAuthHeader());
+
     mensaje.value = "¡Cliente registrado!";
     nombre.value = '';
     telefono.value = '';
-    cargarClientes();
+    cargarClientes(); 
     setTimeout(() => mensaje.value = '', 3000);
   } catch (error) {
-    alert("Error al guardar");
+    // Esto te mostrará el mensaje exacto de por qué la DB falló
+    const errorDb = error.response?.data?.detalles || "Error desconocido en el servidor";
+    alert("Error de base de datos: " + errorDb);
   }
 };
 
-// Eliminar
 const eliminarCliente = async (id) => {
   if (confirm("¿Estás seguro de eliminar este cliente?")) {
     try {
-      await axios.delete(`http://localhost:3000/api/clientes/${id}`);
-      cargarClientes();
+      // Importante: la URL debe terminar en /id (ej: /api/clientes/11)
+      await axios.delete(`${API_URL}/${id}`, getAuthHeader());
+      cargarClientes(); // Recarga la lista para ver el cambio
     } catch (error) {
-      alert("Error al eliminar");
+      alert("No se pudo eliminar el cliente");
     }
   }
 };
 
-// Preparar Edición
 const prepararEdicion = (cliente) => {
   clienteEditado.value = { ...cliente }; 
   editando.value = true;
 };
 
-// Actualizar (PUT)
 const actualizarCliente = async () => {
   try {
-    await axios.put(`http://localhost:3000/api/clientes/${clienteEditado.value.id}`, {
+    // Se envía el ID en la URL y los nuevos datos en el cuerpo (body)
+    await axios.put(`${API_URL}/${clienteEditado.value.id}`, {
       nombre: clienteEditado.value.nombre,
       telefono: clienteEditado.value.telefono
-    });
+    }, getAuthHeader());
+    
     editando.value = false;
     cargarClientes();
-    mensaje.value = "Cliente actualizado";
+    mensaje.value = "Cliente actualizado correctamente";
     setTimeout(() => mensaje.value = '', 3000);
   } catch (error) {
-    alert("Error al actualizar");
+    alert("Error al intentar actualizar");
   }
 };
-
 onMounted(cargarClientes);
 </script>

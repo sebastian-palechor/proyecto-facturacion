@@ -255,4 +255,200 @@ option {
         display: none;
     }
 }
+/* ==========================================================================
+   DISEÑO PARA MÓVIL (Facturación - Corrección Final)
+   ========================================================================== */
 
+@media (max-width: 768px) {
+    /* Forzamos que nada se salga del ancho de la pantalla */
+    .factura-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 10px !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+
+    /* Contenedores de selectores */
+    .search-box, .select-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* EL SELECTOR: Control de ancho y texto largo */
+    .custom-select {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 45px !important;
+        font-size: 14px !important;
+        padding: 0 10px !important;
+        border-radius: 8px !important;
+        background-color: #fff !important;
+        border: 1px solid #ccc !important;
+        
+        /* Corta el texto largo (moto, carro) con puntos suspensivos */
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        
+        /* Quita el diseño de Apple que deforma el cuadro */
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+    }
+
+    /* Resumen (Ticket) ocupando todo el ancho */
+    .resumen-card {
+        position: static !important;
+        width: 100% !important;
+        margin-top: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Tabla de items convertida a tarjetas legibles */
+    .items-card table, .items-card thead, .items-card tbody, .items-card tr, .items-card td {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .items-card thead {
+        display: none !important;
+    }
+
+    .items-card tr {
+        border: 1px solid #eee !important;
+        border-radius: 8px !important;
+        margin-bottom: 10px !important;
+        padding: 10px !important;
+    }
+
+    .items-card td {
+        display: flex !important;
+        justify-content: space-between !important;
+        padding: 5px 0 !important;
+        border-bottom: 1px solid #f9f9f9 !important;
+    }
+
+    .items-card td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #666;
+    }
+
+   /* ==========================================================================
+   DISEÑO EXCLUSIVO PARA MÓVIL
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Ajuste del Contenedor Principal */
+    .factura-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 10px !important;
+        gap: 15px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+
+    /* 2. EL SELECTOR (Evita que se salga de la pantalla) */
+    .search-box, .select-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .custom-select {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 48px !important;
+        font-size: 14px !important;
+        
+        /* Corta el texto largo con puntos suspensivos */
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        
+        /* Reseteo para iPhone/Safari */
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        
+        /* Flecha personalizada */
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9%202-13%205.4s-5%207-5%2012c0%205%202%209%205%2013l129%20129c4%204%209%206%2013%206s9-2%2013-6l129-129c4-4%205-8%205-13a17%2017%200%200%200-5-12z%22%2F%3E%3C%2Fsvg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 12px top 50% !important;
+        background-size: 12px !important;
+    }
+
+    /* 3. Subir el Resumen (Ticket azul) */
+    .resumen-card {
+        position: static !important; /* Deja de flotar */
+        width: 100% !important;
+        margin-top: 5px !important;
+        padding: 15px !important;
+        order: 2; /* Aparece después de buscar productos */
+    }
+
+    /* 4. Lista de Productos (Items) */
+    .items-card {
+        padding: 5px !important;
+        min-height: auto !important;
+        order: 1; /* Los productos van arriba */
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* Transformación de Tabla a Tarjetas */
+    .custom-table thead {
+        display: none !important;
+    }
+
+    .custom-table tr {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
+        background: #fff !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02) !important;
+    }
+
+    .custom-table td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px solid #f8fafc !important;
+        font-size: 14px !important;
+    }
+
+    /* Etiquetas de la izquierda */
+    .custom-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        font-size: 11px;
+    }
+
+    .custom-table td:last-child {
+        border-bottom: none !important;
+        justify-content: center !important;
+        padding-top: 10px !important;
+    }
+
+    /* Botón Finalizar */
+    .btn-finalizar {
+        width: 100% !important;
+        padding: 16px !important;
+        font-size: 16px !important;
+    }
+}
+}

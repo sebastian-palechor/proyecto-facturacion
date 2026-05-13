@@ -25,7 +25,6 @@ const cerrarSesion = () => {
   router.push('/login');
 };
 </script>
-
 <style scoped>
 .navbar {
   display: flex;
@@ -34,18 +33,26 @@ const cerrarSesion = () => {
   background-color: #2c3e50;
   padding: 1rem 2rem;
   color: white;
+  /* Aseguramos que ocupe todo el ancho */
+  width: 100%;
+  box-sizing: border-box; 
+  position: relative;
+  z-index: 1000;
 }
 
 .nav-brand {
   font-size: 1.5rem;
   font-weight: bold;
   color: #3498db;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
   list-style: none;
   gap: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-item {
@@ -66,9 +73,39 @@ const cerrarSesion = () => {
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
-.btn-logout:hover {
-  background-color: #c0392b;
+/* --- AJUSTES PARA MÓVIL --- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap; /* Permite que los elementos bajen si es necesario */
+    padding: 1rem;
+  }
+
+  .nav-links {
+    /* En móvil, los links se organizan en fila con scroll horizontal 
+       o puedes ponerlos en columna. Aquí los dejamos fluidos: */
+    width: 100%;
+    order: 3; /* Los manda debajo del brand y el botón */
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 15px;
+    overflow-x: auto; /* Si son muchos, permite deslizar de lado */
+    padding-bottom: 5px;
+  }
+
+  .nav-item {
+    font-size: 0.9rem;
+  }
+
+  .nav-brand {
+    font-size: 1.2rem;
+  }
+
+  .btn-logout {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
 }
 </style>

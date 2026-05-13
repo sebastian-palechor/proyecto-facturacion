@@ -24,4 +24,18 @@ const mostrarNavbar = computed(() => {
 #app {
   font-family: 'Inter', sans-serif;
 }
+/* Esto asegura que el cuerpo de la página no tenga márgenes blancos por defecto */
+:global(body), :global(html) {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita el scroll horizontal molesto */
+}
+
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  max-width: 100vw; /* Ocupa el ancho total de la ventana */
+}
 </style>

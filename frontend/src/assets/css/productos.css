@@ -118,9 +118,144 @@
     cursor: pointer;
     transition: background 0.3s;
     white-space: nowrap;
-
 }
 
 .btn-save:hover {
     background-color: #8ab9e7;
+}
+/* ==========================================================================
+   DISEÑO PARA MÓVIL (Productos - Vista de Tarjetas Compactas)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Ajuste del contenedor principal */
+    .productos-container {
+        padding: 0; /* Pegado a los bordes para ganar espacio */
+    }
+
+    /* 2. Formulario y Selectores */
+    .form-card, .form-container, .input-group, .search-box, .select-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 100%;
+        gap: 12px;
+        padding: 15px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .custom-select {
+        font-size: 14px !important; 
+        padding: 10px 35px 10px 12px !important;
+        height: 45px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border-radius: 8px;
+    }
+
+    .custom-select option {
+        font-size: 13px;
+    }
+
+    .btn-success, .btn-save {
+        width: 100%;
+        padding: 12px;
+        font-weight: 700;
+    }
+
+    /* 3. Transformación de la Tabla a Tarjetas (Igual que Clientes) */
+    .custom-table thead {
+        display: none; /* Ocultamos encabezados */
+    }
+
+    .custom-table, 
+    .custom-table tbody, 
+    .custom-table tr, 
+    .custom-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .custom-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 12px;
+        background: #fff;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .custom-table td {
+        display: flex;
+        justify-content: space-between; /* Etiqueta a la izquierda, Dato a la derecha */
+        align-items: center;
+        padding: 10px 5px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 14px;
+        min-height: 40px;
+        text-align: right;
+        color: #1e293b;
+        font-weight: 500;
+    }
+
+    .custom-table td:last-child {
+        border-bottom: none;
+        justify-content: center; /* Botones centrados al final */
+        gap: 25px;
+        padding-top: 15px;
+    }
+
+    /* 4. Etiquetas Dinámicas (data-label) alineadas a la izquierda */
+    .custom-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        font-size: 11px;
+        text-align: left;
+        flex: 1; /* Empuja el valor hacia la derecha */
+    }
+
+    /* 5. Protección para textos largos (Nombres de productos) */
+    .custom-table td:not(:last-child) {
+        word-break: break-word;
+        max-width: 65%; /* Evita que el nombre pise la etiqueta */
+    }
+
+    @media (max-width: 768px) {
+    /* Asegura que el contenedor de búsqueda no se desborde */
+    .search-box {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0 5px; /* Pequeño respiro lateral */
+    }
+
+    .select-wrapper {
+        width: 100%;
+        position: relative;
+    }
+
+    /* Ajuste del Select para que sea compacto y no se salga */
+    .custom-select {
+        width: 100% !important; /* Obliga al ancho total del padre */
+        max-width: 100% !important;
+        font-size: 14px !important; /* Evita que el texto grande estire el cuadro */
+        padding: 10px 30px 10px 10px !important;
+        height: 45px;
+        border-radius: 8px;
+        text-overflow: ellipsis; /* Pone "..." si el texto es muy largo */
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    /* Reducción de las opciones para que el menú nativo sea legible */
+    .custom-select option {
+        font-size: 13px;
+        padding: 10px;
+    }
+}
 }

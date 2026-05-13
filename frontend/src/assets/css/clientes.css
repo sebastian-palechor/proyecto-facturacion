@@ -1,20 +1,28 @@
-/* Contenedor principal que envuelve toda la vista */
+/* ==========================================================================
+   DISEÑO PARA PC (Ancho Completo)
+   ========================================================================== */
+
+/* Contenedor principal */
 .clientes-page-wrapper {
-    background-color: #f8fafc; /* Gris azulado muy suave */
+    background-color: #f8fafc;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 20px; 
     box-sizing: border-box;
     font-family: 'Inter', system-ui, sans-serif;
+    display: block; 
+    width: 100%;
 }
 
 /* La tarjeta principal blanca */
 .clientes-card-container {
     background: #ffffff;
-    max-width: 1100px;
+    width: 100%; 
+    max-width: 100%; /* Permite que se extienda en toda la pantalla */
     margin: 0 auto;
     border-radius: 12px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    padding: 40px;
+    padding: 40px; 
+    box-sizing: border-box;
 }
 
 /* Cabecera de la sección */
@@ -53,10 +61,12 @@
     display: flex;
     gap: 20px;
     align-items: flex-end;
+    flex-wrap: wrap; /* Para que en tablets los campos bajen */
 }
 
 .input-field {
     flex: 1;
+    min-width: 250px;
 }
 
 .input-field label {
@@ -101,6 +111,7 @@
 
 /* Tabla de clientes */
 .table-wrapper {
+    width: 100%;
     overflow-x: auto;
 }
 
@@ -127,10 +138,6 @@
     font-size: 15px;
 }
 
-.clientes-table tr:hover {
-    background-color: #fbfcfd;
-}
-
 .id-badge {
     background: #e2e8f0;
     color: #475569;
@@ -139,35 +146,130 @@
     font-weight: bold;
     font-size: 12px;
 }
-.btn-edit, .btn-delete {
-    padding: 6px 10px;
-    margin: 0 4px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
 
-.btn-edit { background: #fef3c7; }
-.btn-delete { background: #fee2e2; }
+/* ==========================================================================
+   DISEÑO PARA MÓVIL (Responsivo Compacto y Legible)
+   ========================================================================== */
 
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: flex; align-items: center; justify-content: center;
-}
+@media (max-width: 768px) {
+    /* 1. Eliminamos espacios innecesarios en el borde de la pantalla */
+    .clientes-page-wrapper {
+        padding: 0; 
+    }
 
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 400px;
-}
+    /* 2. Compactamos la tarjeta principal blanca */
+    .clientes-card-container {
+        padding: 15px 10px; /* Reducimos el relleno lateral de 20px a 10px */
+        border-radius: 0; 
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-.btn-cancel {
-    background: #94a3b8;
-    color: white;
-    border: none; padding: 10px; border-radius: 6px; cursor: pointer;
+    /* 3. Ajustes de Cabecera y Formulario */
+    .clientes-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .clientes-header h1 {
+        font-size: 20px; /* Un poco más pequeño en móvil */
+    }
+
+    .form-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px; /* Menos espacio entre campos */
+    }
+
+    .input-field {
+        min-width: 100%;
+    }
+
+    /* Compactamos los inputs para ganar espacio vertical */
+    .input-field input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .btn-add-cliente {
+        width: 100%;
+    }
+
+    /* ==========================================================================
+       Transformación de Tabla a Tarjetas Compactas
+       ========================================================================== */
+    .clientes-table thead {
+        display: none; /* Ocultamos encabezados de tabla originales */
+    }
+
+    .clientes-table, 
+    .clientes-table tbody, 
+    .clientes-table tr, 
+    .clientes-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* 4. Estilo de cada Tarjeta de Cliente */
+    .clientes-table tr {
+        margin-bottom: 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 8px; /* Compactamos el relleno de la tarjeta de 10px a 8px */
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+
+    /* 5. Estilo de cada Celda (Fila de la tarjeta) */
+    .clientes-table td {
+        display: flex;
+        justify-content: space-between; /* Etiqueta izquierda, Dato derecha */
+        align-items: center; /* Centrado vertical */
+        padding: 6px 4px; /* Relleno vertical reducido dramáticamente */
+        border-bottom: 1px solid #f8fafc;
+        font-size: 14px; /* Fuente ligeramente más pequeña para legibilidad */
+        text-align: right;
+        min-height: 35px; /* Asegura altura mínima para el flex */
+    }
+
+    /* 6. SOLUCIÓN CRÍTICA: Control de desborde de texto (Nombres largos) */
+    .clientes-table td span,
+    .id-badge,
+    .clientes-table td:not(:first-child):not(:last-child) {
+        max-width: 60%; /* El dato no puede ocupar más del 60% del ancho */
+        word-break: break-word; /* Rompe palabras largas si es necesario */
+        text-align: right;
+        display: block; /* Asegura que el max-width funcione */
+    }
+
+    /* 7. Estilo de la Etiqueta (Atributo data-label) */
+    .clientes-table td::before {
+        content: attr(data-label);
+        font-weight: 700; /* Más negrita para contraste */
+        color: #64748b;
+        text-transform: uppercase;
+        font-size: 11px; /* Etiqueta más pequeña para que resalte el dato */
+        text-align: left;
+        min-width: 35%; /* Espacio garantizado para la etiqueta */
+        margin-right: 10px;
+        display: block;
+    }
+
+    /* 8. Ajuste para el ID Badge */
+    .id-badge {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+
+    /* 9. Fila de Acciones (Botones) */
+    .clientes-table td:last-child {
+        border-bottom: none;
+        justify-content: space-around; /* Botones distribuidos */
+        padding-top: 10px;
+        gap: 10px;
+        margin-top: 5px;
+    }
 }

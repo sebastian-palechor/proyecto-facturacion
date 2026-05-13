@@ -123,17 +123,15 @@
 .btn-save:hover {
     background-color: #8ab9e7;
 }
-/* ==========================================================================
-   DISEÑO PARA MÓVIL (Productos - Vista de Tarjetas Compactas)
-   ========================================================================== */
+
 
 @media (max-width: 768px) {
-    /* 1. Ajuste del contenedor principal */
+    
     .productos-container {
-        padding: 0; /* Pegado a los bordes para ganar espacio */
+        padding: 0; 
     }
 
-    /* 2. Formulario y Selectores */
+    
     .form-card, .form-container, .input-group, .search-box, .select-wrapper {
         display: flex;
         flex-direction: column;
@@ -165,9 +163,8 @@
         font-weight: 700;
     }
 
-    /* 3. Transformación de la Tabla a Tarjetas (Igual que Clientes) */
     .custom-table thead {
-        display: none; /* Ocultamos encabezados */
+        display: none; 
     }
 
     .custom-table, 
@@ -190,7 +187,7 @@
 
     .custom-table td {
         display: flex;
-        justify-content: space-between; /* Etiqueta a la izquierda, Dato a la derecha */
+        justify-content: space-between; 
         align-items: center;
         padding: 10px 5px;
         border-bottom: 1px solid #f1f5f9;
@@ -208,7 +205,7 @@
         padding-top: 15px;
     }
 
-    /* 4. Etiquetas Dinámicas (data-label) alineadas a la izquierda */
+
     .custom-table td::before {
         content: attr(data-label);
         font-weight: 700;
@@ -216,22 +213,22 @@
         text-transform: uppercase;
         font-size: 11px;
         text-align: left;
-        flex: 1; /* Empuja el valor hacia la derecha */
+        flex: 1; 
     }
 
-    /* 5. Protección para textos largos (Nombres de productos) */
+   
     .custom-table td:not(:last-child) {
         word-break: break-word;
-        max-width: 65%; /* Evita que el nombre pise la etiqueta */
+        max-width: 65%; 
     }
 
     @media (max-width: 768px) {
-    /* Asegura que el contenedor de búsqueda no se desborde */
+    
     .search-box {
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
-        padding: 0 5px; /* Pequeño respiro lateral */
+        padding: 0 5px; 
     }
 
     .select-wrapper {
@@ -239,20 +236,19 @@
         position: relative;
     }
 
-    /* Ajuste del Select para que sea compacto y no se salga */
+   
     .custom-select {
-        width: 100% !important; /* Obliga al ancho total del padre */
+        width: 100% !important; 
         max-width: 100% !important;
-        font-size: 14px !important; /* Evita que el texto grande estire el cuadro */
+        font-size: 14px !important; 
         padding: 10px 30px 10px 10px !important;
         height: 45px;
         border-radius: 8px;
-        text-overflow: ellipsis; /* Pone "..." si el texto es muy largo */
+        text-overflow: ellipsis; 
         white-space: nowrap;
         overflow: hidden;
     }
 
-    /* Reducción de las opciones para que el menú nativo sea legible */
     .custom-select option {
         font-size: 13px;
         padding: 10px;

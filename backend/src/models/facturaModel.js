@@ -1,8 +1,8 @@
 import pool from "../config/db.js";
 
 export const insertarFactura = async (cliente_id, total) => {
-    // Calculamos el total con IVA si el 'total' recibido es el neto
-    // Si el 'total' ya trae el IVA desde el frontend, quita este cálculo
+    // Calculamos el total con IVA 
+
     const [result] = await pool.query(
         "INSERT INTO facturas (cliente_id, total, fecha) VALUES (?, ?, NOW())",
         [cliente_id, total]

@@ -30,7 +30,7 @@
     min-height: 400px;
 }
 
-/* Resumen lateral (El Ticket) */
+/* Resumen lateral  */
 .resumen-card {
     background: #1e293b;
     color: white;
@@ -81,7 +81,7 @@
     padding-top: 10px;
 }
 
-/* ESTILOS DEL MODAL (Factura Emergente) */
+/* ESTILOS DEL MODAL */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -235,7 +235,7 @@ option {
 
 
 @media print {
-    /* Ocultar todo lo que no sea el modal */
+    
     body * {
         visibility: hidden;
     }
@@ -255,9 +255,8 @@ option {
         display: none;
     }
 }
-/* ==========================================================================
-   DISEÑO PARA MÓVIL (Facturación - Corrección Final)
-   ========================================================================== */
+/* 
+   DISEÑO PARA MÓVIL */
 
 @media (max-width: 768px) {
     /* Forzamos que nada se salga del ancho de la pantalla */
@@ -290,18 +289,15 @@ option {
         background-color: #fff !important;
         border: 1px solid #ccc !important;
         
-        /* Corta el texto largo (moto, carro) con puntos suspensivos */
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         
-        /* Quita el diseño de Apple que deforma el cuadro */
         -webkit-appearance: none !important;
         -moz-appearance: none !important;
         appearance: none !important;
     }
 
-    /* Resumen (Ticket) ocupando todo el ancho */
     .resumen-card {
         position: static !important;
         width: 100% !important;
@@ -309,7 +305,6 @@ option {
         box-sizing: border-box !important;
     }
 
-    /* Tabla de items convertida a tarjetas legibles */
     .items-card table, .items-card thead, .items-card tbody, .items-card tr, .items-card td {
         display: block !important;
         width: 100% !important;
@@ -339,9 +334,8 @@ option {
         color: #666;
     }
 
-   /* ==========================================================================
-   DISEÑO EXCLUSIVO PARA MÓVIL
-   ========================================================================== */
+   /* 
+   DISEÑO EXCLUSIVO PARA MÓVIL*/
 
 @media (max-width: 768px) {
     /* 1. Ajuste del Contenedor Principal */
@@ -355,7 +349,7 @@ option {
         overflow-x: hidden !important;
     }
 
-    /* 2. EL SELECTOR (Evita que se salga de la pantalla) */
+    /*  EL SELECTOR  */
     .search-box, .select-wrapper {
         width: 100% !important;
         max-width: 100% !important;
@@ -369,30 +363,26 @@ option {
         height: 48px !important;
         font-size: 14px !important;
         
-        /* Corta el texto largo con puntos suspensivos */
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         
-        /* Reseteo para iPhone/Safari */
         -webkit-appearance: none !important;
         -moz-appearance: none !important;
         appearance: none !important;
         
-        /* Flecha personalizada */
         background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9%202-13%205.4s-5%207-5%2012c0%205%202%209%205%2013l129%20129c4%204%209%206%2013%206s9-2%2013-6l129-129c4-4%205-8%205-13a17%2017%200%200%200-5-12z%22%2F%3E%3C%2Fsvg%3E") !important;
         background-repeat: no-repeat !important;
         background-position: right 12px top 50% !important;
         background-size: 12px !important;
     }
 
-    /* 3. Subir el Resumen (Ticket azul) */
     .resumen-card {
-        position: static !important; /* Deja de flotar */
+        position: static !important; 
         width: 100% !important;
         margin-top: 5px !important;
         padding: 15px !important;
-        order: 2; /* Aparece después de buscar productos */
+        order: 2; 
     }
 
     /* 4. Lista de Productos (Items) */

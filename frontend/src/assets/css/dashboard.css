@@ -1,7 +1,5 @@
-/* src/assets/css/dashboard.css */
-
 /* Estructura Principal */
-/* Cambia el layout de columnas a filas */
+
 .dashboard-layout {
     display: flex;
     flex-direction: column; /* Cambiado de grid a columna */

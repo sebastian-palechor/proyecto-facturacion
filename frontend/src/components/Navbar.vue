@@ -79,19 +79,18 @@ const cerrarSesion = () => {
 /* --- AJUSTES PARA MÓVIL --- */
 @media (max-width: 768px) {
   .navbar {
-    flex-wrap: wrap; /* Permite que los elementos bajen si es necesario */
+    flex-wrap: wrap; 
     padding: 1rem;
   }
 
   .nav-links {
-    /* En móvil, los links se organizan en fila con scroll horizontal 
-       o puedes ponerlos en columna. Aquí los dejamos fluidos: */
+    
     width: 100%;
-    order: 3; /* Los manda debajo del brand y el botón */
+    order: 3; 
     justify-content: space-around;
     gap: 10px;
     margin-top: 15px;
-    overflow-x: auto; /* Si son muchos, permite deslizar de lado */
+    overflow-x: auto; 
     padding-bottom: 5px;
   }
 

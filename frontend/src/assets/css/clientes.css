@@ -1,8 +1,4 @@
-/* ==========================================================================
-   DISEÑO PARA PC (Ancho Completo)
-   ========================================================================== */
 
-/* Contenedor principal */
 .clientes-page-wrapper {
     background-color: #f8fafc;
     min-height: 100vh;
@@ -13,11 +9,11 @@
     width: 100%;
 }
 
-/* La tarjeta principal blanca */
+
 .clientes-card-container {
     background: #ffffff;
     width: 100%; 
-    max-width: 100%; /* Permite que se extienda en toda la pantalla */
+    max-width: 100%; 
     margin: 0 auto;
     border-radius: 12px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
@@ -42,7 +38,7 @@
     margin: 0;
 }
 
-/* Formulario horizontal moderno */
+
 .clientes-form-box {
     background-color: #f1f5f9;
     padding: 25px;
@@ -61,7 +57,7 @@
     display: flex;
     gap: 20px;
     align-items: flex-end;
-    flex-wrap: wrap; /* Para que en tablets los campos bajen */
+    flex-wrap: wrap; 
 }
 
 .input-field {
@@ -147,25 +143,23 @@
     font-size: 12px;
 }
 
-/* ==========================================================================
-   DISEÑO PARA MÓVIL (Responsivo Compacto y Legible)
-   ========================================================================== */
+/* DISEÑO PARA MÓVIL */
 
 @media (max-width: 768px) {
-    /* 1. Eliminamos espacios innecesarios en el borde de la pantalla */
+    
     .clientes-page-wrapper {
         padding: 0; 
     }
 
-    /* 2. Compactamos la tarjeta principal blanca */
+    
     .clientes-card-container {
-        padding: 15px 10px; /* Reducimos el relleno lateral de 20px a 10px */
+        padding: 15px 10px; 
         border-radius: 0; 
         width: 100%;
         box-sizing: border-box;
     }
 
-    /* 3. Ajustes de Cabecera y Formulario */
+    
     .clientes-header {
         flex-direction: column;
         align-items: center;
@@ -174,20 +168,20 @@
     }
 
     .clientes-header h1 {
-        font-size: 20px; /* Un poco más pequeño en móvil */
+        font-size: 20px; 
     }
 
     .form-flex {
         flex-direction: column;
         align-items: stretch;
-        gap: 15px; /* Menos espacio entre campos */
+        gap: 15px; 
     }
 
     .input-field {
         min-width: 100%;
     }
 
-    /* Compactamos los inputs para ganar espacio vertical */
+    
     .input-field input {
         padding: 10px;
         font-size: 14px;
@@ -197,11 +191,8 @@
         width: 100%;
     }
 
-    /* ==========================================================================
-       Transformación de Tabla a Tarjetas Compactas
-       ========================================================================== */
     .clientes-table thead {
-        display: none; /* Ocultamos encabezados de tabla originales */
+        display: none; 
     }
 
     .clientes-table, 
@@ -213,61 +204,59 @@
         box-sizing: border-box;
     }
 
-    /* 4. Estilo de cada Tarjeta de Cliente */
     .clientes-table tr {
         margin-bottom: 12px;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
-        padding: 8px; /* Compactamos el relleno de la tarjeta de 10px a 8px */
+        padding: 8px; 
         background: #fff;
         box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
 
-    /* 5. Estilo de cada Celda (Fila de la tarjeta) */
     .clientes-table td {
         display: flex;
-        justify-content: space-between; /* Etiqueta izquierda, Dato derecha */
-        align-items: center; /* Centrado vertical */
-        padding: 6px 4px; /* Relleno vertical reducido dramáticamente */
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 6px 4px; 
         border-bottom: 1px solid #f8fafc;
-        font-size: 14px; /* Fuente ligeramente más pequeña para legibilidad */
+        font-size: 14px; 
         text-align: right;
-        min-height: 35px; /* Asegura altura mínima para el flex */
+        min-height: 35px; 
     }
 
-    /* 6. SOLUCIÓN CRÍTICA: Control de desborde de texto (Nombres largos) */
+    
     .clientes-table td span,
     .id-badge,
     .clientes-table td:not(:first-child):not(:last-child) {
-        max-width: 60%; /* El dato no puede ocupar más del 60% del ancho */
-        word-break: break-word; /* Rompe palabras largas si es necesario */
+        max-width: 60%; 
+        word-break: break-word; 
         text-align: right;
-        display: block; /* Asegura que el max-width funcione */
+        display: block; 
     }
 
-    /* 7. Estilo de la Etiqueta (Atributo data-label) */
+    
     .clientes-table td::before {
         content: attr(data-label);
-        font-weight: 700; /* Más negrita para contraste */
+        font-weight: 700; 
         color: #64748b;
         text-transform: uppercase;
-        font-size: 11px; /* Etiqueta más pequeña para que resalte el dato */
+        font-size: 11px; 
         text-align: left;
-        min-width: 35%; /* Espacio garantizado para la etiqueta */
+        min-width: 35%; 
         margin-right: 10px;
         display: block;
     }
 
-    /* 8. Ajuste para el ID Badge */
+    
     .id-badge {
         font-size: 11px;
         padding: 3px 6px;
     }
 
-    /* 9. Fila de Acciones (Botones) */
+    /*  (Botones) */
     .clientes-table td:last-child {
         border-bottom: none;
-        justify-content: space-around; /* Botones distribuidos */
+        justify-content: space-around; 
         padding-top: 10px;
         gap: 10px;
         margin-top: 5px;

@@ -31,7 +31,6 @@ export const actualizarProducto = async (req, res) => {
         res.status(500).json({ error: "Error al actualizar" });
     }
 };
-s
 export const eliminarProducto = async (req, res) => {
     const { id } = req.params;
     try {

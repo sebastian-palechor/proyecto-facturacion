@@ -7,7 +7,7 @@ export const crearUsuario = async (correo, hashedPassword) => {
 
 export const buscarPorCorreo = async (correo) => {
     const [rows] = await db.query('SELECT * FROM usuarios WHERE correo = ?', [correo]);
-    return rows[0]; // Retornamos el primer usuario encontrado
+    return rows[0]; 
 };
 
 export const listarUsuarios = async () => {

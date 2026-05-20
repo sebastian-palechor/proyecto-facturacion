@@ -5,6 +5,10 @@
         <h1>Gestión de Clientes</h1>
       </header>
 
+      <section class="search-card">
+        <input class="search-input" v-model="filtroCliente" placeholder="Buscar por nombre o teléfono" />
+      </section>
+
       <section class="clientes-form-box">
         <h3>Registrar Nuevo Cliente</h3>
         <form @submit.prevent="handleRegistroCliente" class="form-flex">
@@ -31,8 +35,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="cliente in listaClientes" :key="cliente.id">
-              <td data-label="ID"><span class="id-badge">#{{ cliente.id }}</span></td>
+            <tr v-for="cliente in clientesFiltrados" :key="cliente.id">
+              <td data-label="ID"><span class="id-badge">#{{ cliente.numero }}</span></td>
               <td data-label="Nombre" class="font-medium">{{ cliente.nombre }}</td>
               <td data-label="Teléfono">{{ cliente.telefono }}</td>
               <td data-label="Acciones" class="text-center">
@@ -69,16 +73,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import '@/assets/css/clientes.css'; 
 
+const filtroCliente = ref('');
 const nombre = ref('');
 const telefono = ref('');
 const mensaje = ref('');
 const listaClientes = ref([]);
 const editando = ref(false);
 const clienteEditado = ref({ id: null, nombre: '', telefono: '' });
+
+const clientesFiltrados = computed(() => {
+  const listado = listaClientes.value.map((c, i) => ({ ...c, numero: i + 1 }));
+  const termino = filtroCliente.value.trim().toLowerCase();
+  if (!termino) return listado;
+  return listado.filter(cliente => {
+    const nombreLower = cliente.nombre.toLowerCase();
+    const telefonoLower = cliente.telefono.toLowerCase();
+    return nombreLower.includes(termino) || telefonoLower.includes(termino);
+  });
+});
 
 const API_URL = 'http://localhost:3000/api/clientes';
 
@@ -90,7 +106,7 @@ const getAuthHeader = () => {
 const cargarClientes = async () => {
   try {
     const res = await axios.get(API_URL, getAuthHeader());
-    listaClientes.value = res.data;
+    listaClientes.value = res.data.sort((a, b) => a.id - b.id);
   } catch (error) {
     console.error("Error al cargar:", error);
   }
@@ -109,7 +125,6 @@ const handleRegistroCliente = async () => {
     cargarClientes(); 
     setTimeout(() => mensaje.value = '', 3000);
   } catch (error) {
-    // Esto te mostrará el mensaje exacto de por qué la DB falló
     const errorDb = error.response?.data?.detalles || "Error desconocido en el servidor";
     alert("Error de base de datos: " + errorDb);
   }
@@ -118,7 +133,6 @@ const handleRegistroCliente = async () => {
 const eliminarCliente = async (id) => {
   if (confirm("¿Estás seguro de eliminar este cliente?")) {
     try {
-      // Importante: la URL debe terminar en /id (ej: /api/clientes/11)
       await axios.delete(`${API_URL}/${id}`, getAuthHeader());
       cargarClientes(); // Recarga la lista para ver el cambio
     } catch (error) {
@@ -134,7 +148,6 @@ const prepararEdicion = (cliente) => {
 
 const actualizarCliente = async () => {
   try {
-    // Se envía el ID en la URL y los nuevos datos en el cuerpo (body)
     await axios.put(`${API_URL}/${clienteEditado.value.id}`, {
       nombre: clienteEditado.value.nombre,
       telefono: clienteEditado.value.telefono

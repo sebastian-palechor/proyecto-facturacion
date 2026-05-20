@@ -9,7 +9,6 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* La tarjeta blanca donde está el formulario */
 .login-card {
     background: #ffffff;
     padding: 40px;
@@ -53,7 +52,7 @@
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
-    box-sizing: border-box; /* Muy importante para que no se salga de la tarjeta */
+    box-sizing: border-box; 
 }
 
 .form-group input:focus {

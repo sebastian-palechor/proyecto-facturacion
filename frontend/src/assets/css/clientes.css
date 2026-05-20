@@ -21,7 +21,6 @@
     box-sizing: border-box;
 }
 
-/* Cabecera de la sección */
 .clientes-header {
     border-bottom: 2px solid #f1f5f9;
     margin-bottom: 30px;
@@ -39,30 +38,63 @@
 }
 
 
+.search-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    padding: 1rem 1.25rem;
+    border-radius: 0.85rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.08);
+}
+
+.search-card input {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.9rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    color: #0f172a;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.search-card input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+    background: #ffffff;
+}
+
+.search-card input::placeholder {
+    color: #64748b;
+}
+
 .clientes-form-box {
     background-color: #f1f5f9;
     padding: 25px;
     border-radius: 8px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .clientes-form-box h3 {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     color: #475569;
     font-size: 16px;
 }
 
 .form-flex {
     display: flex;
-    gap: 20px;
-    align-items: flex-end;
+    gap: 14px;
+    align-items: center;
     flex-wrap: wrap; 
-}
+}   
 
 .input-field {
     flex: 1;
-    min-width: 250px;
+    min-width: 180px;
+    max-width: 320px;
 }
 
 .input-field label {

@@ -1,12 +1,9 @@
-/* Estructura Principal */
-
 .dashboard-layout {
     display: flex;
-    flex-direction: column; /* Cambiado de grid a columna */
+    flex-direction: column; 
     min-height: 100vh;
     background-color: #f8fafc;
 }
-/* Sidebar */
 .sidebar {
     background-color: #0f172a;
     color: #f8fafc;
@@ -39,7 +36,7 @@
     background-color: #1e293b;
     border-radius: 5px;
 }
-/* Contenido */
+
 .main-content {
     padding: 2rem;
 }
@@ -100,9 +97,9 @@
     align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-/* En dashboard.css */
+
 .main-content {
     padding: 2rem;
-    margin-top: 20px; /* Esto le da aire entre el Navbar y el contenido */
+    margin-top: 20px; 
 }
 

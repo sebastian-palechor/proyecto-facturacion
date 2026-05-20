@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-// Importamos el store de Pinia y nuestra instancia de API con interceptores
 import { useAuthStore } from '@/stores/auth'; 
 import api from '@/api/axios'; 
 import '@/assets/css/login.css';
@@ -10,11 +9,10 @@ const email = ref('');
 const password = ref('');
 const mensaje = ref('');
 const router = useRouter();
-const auth = useAuthStore(); // Instanciamos el store
+const auth = useAuthStore(); 
 
 const handleLogin = async () => {
   try {
-    // Usamos el método login del store para manejar el estado global
     const result = await auth.login({
       correo: email.value,
       password: password.value

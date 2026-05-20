@@ -17,11 +17,9 @@ const handleRegister = async () => {
       password: password.value
     });
 
-    // Si el registro es exitoso, mandamos al login
     alert("Usuario registrado con éxito");
     router.push('/login');
   } catch (error) {
-    // Aquí capturamos los errores de validación (como los que configuramos en el middleware)
     mensaje.value = error.response?.data?.mensaje || "Error al registrar usuario";
   }
 };

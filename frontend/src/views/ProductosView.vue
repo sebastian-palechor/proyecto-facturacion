@@ -5,6 +5,13 @@
         <h2>Gestión de Inventario</h2>
       </header>
 
+      <div class="search-card">
+        <input class="search-input" v-model="filtroNombre" placeholder="Buscar por nombre" />
+      </div>
+
+      <section class="form-section-title">
+        <h3>Registrar Nuevo Producto</h3>
+      </section>
       <div class="form-card">
         <input v-model="nuevoProducto.nombre" placeholder="Nombre del producto" />
         <input v-model.number="nuevoProducto.precio" type="number" placeholder="Precio" />
@@ -23,7 +30,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="p in productos" :key="p.id">
+            <tr v-for="p in productosFiltrados" :key="p.id">
               <td data-label="Nombre">{{ p.nombre }}</td>
               <td data-label="Precio">${{ p.precio }}</td>
               <td data-label="Stock">{{ p.stock }}</td>
@@ -64,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router'; 
 import '@/assets/css/productos.css';
@@ -72,7 +79,14 @@ import '@/assets/css/productos.css';
 const router = useRouter();
 const API_URL = 'http://localhost:3000/api/productos';
 const productos = ref([]);
+const filtroNombre = ref('');
 const nuevoProducto = ref({ nombre: '', precio: null, stock: null });
+
+const productosFiltrados = computed(() => {
+  const termino = filtroNombre.value.trim().toLowerCase();
+  if (!termino) return productos.value;
+  return productos.value.filter(p => p.nombre.toLowerCase().includes(termino));
+});
 
 // Estado para la edición
 const editando = ref(false);

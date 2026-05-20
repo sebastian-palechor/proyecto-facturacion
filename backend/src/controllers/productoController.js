@@ -1,6 +1,6 @@
 import * as productoModel from "../models/productoModel.js";
 
-// Listar productos
+
 export const listarProductos = async (req, res) => {
     try {
         const productos = await productoModel.obtenerTodos();
@@ -10,7 +10,7 @@ export const listarProductos = async (req, res) => {
     }
 };
 
-// Guardar producto
+
 export const guardarProducto = async (req, res) => {
     const { nombre, precio, stock } = req.body;
     try {
@@ -21,7 +21,6 @@ export const guardarProducto = async (req, res) => {
     }
 };
 
-// Actualizar producto
 export const actualizarProducto = async (req, res) => {
     const { id } = req.params;
     const { nombre, precio, stock } = req.body;
@@ -32,8 +31,7 @@ export const actualizarProducto = async (req, res) => {
         res.status(500).json({ error: "Error al actualizar" });
     }
 };
-
-// Eliminar producto (Corregido para ignorar errores de integridad si cambiaste la DB)
+s
 export const eliminarProducto = async (req, res) => {
     const { id } = req.params;
     try {

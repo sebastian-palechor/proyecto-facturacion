@@ -26,22 +26,24 @@
               <th>Cant.</th>
               <th>Precio Unit.</th>
               <th>IVA (19%)</th>
+              <th>Método de pago</th>
               <th>Total Línea</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in facturasFiltradas" :key="item.id_detalle">
-              <td><span class="factura-badge"># {{ item.factura_nro }}</span></td>
+              <td><span class="factura-badge"># {{ item.factura_numero }}</span></td>
               <td>{{ formatDate(item.fecha) }}</td>
               <td>{{ item.cliente }}</td>
               <td>{{ item.producto }}</td>
               <td>{{ item.cantidad }}</td>
               <td>${{ item.precio_unitario.toLocaleString() }}</td>
               <td>${{ item.iva.toLocaleString() }}</td>
+              <td>{{ item.metodo_pago }}</td>
               <td class="text-total">${{ item.total_linea.toLocaleString() }}</td>
             </tr>
             <tr v-if="facturasFiltradas.length === 0">
-              <td colspan="8" style="text-align: center; padding: 30px; color: #95a5a6;">
+              <td colspan="9" style="text-align: center; padding: 30px; color: #95a5a6;">
                 No se encontraron registros en el historial.
               </td>
             </tr>
@@ -55,12 +57,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
-import '@/assets/css/facturas.css'; // Reutiliza tus estilos existentes
+import '@/assets/css/facturas.css'; 
 
 const listaFacturas = ref([]);
 const filtro = ref('');
 
-// Carga los datos desde el endpoint que vincula factura_detalle con facturas, clientes y productos
 const cargarHistorial = async () => {
   try {
     const res = await axios.get('http://localhost:3000/api/facturas/historial');
@@ -70,17 +71,29 @@ const cargarHistorial = async () => {
   }
 };
 
-// Filtro dinámico para buscar en la tabla
 const facturasFiltradas = computed(() => {
   const search = filtro.value.toLowerCase();
-  return listaFacturas.value.filter(f => 
+  // Filtramos primero por los términos de búsqueda
+  const filtrado = listaFacturas.value.filter(f => 
     f.cliente.toLowerCase().includes(search) ||
     f.producto.toLowerCase().includes(search) ||
-    f.factura_nro.toString().includes(search)
+    f.factura_nro.toString().includes(search) ||
+    f.metodo_pago.toLowerCase().includes(search)
   );
+
+  const ordenado = [...filtrado].sort((a, b) => a.factura_nro - b.factura_nro);
+
+  const mapa = new Map();
+  let seq = 1;
+  for (const f of ordenado) {
+    if (!mapa.has(f.factura_nro)) {
+      mapa.set(f.factura_nro, seq++);
+    }
+  }
+
+  return filtrado.map(f => ({ ...f, factura_numero: mapa.get(f.factura_nro) }));
 });
 
-// Formatear la fecha para que sea legible
 const formatDate = (dateString) => {
   if (!dateString) return "N/A";
   const date = new Date(dateString);

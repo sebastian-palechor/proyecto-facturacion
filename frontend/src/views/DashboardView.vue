@@ -49,8 +49,6 @@ const obtenerUsuarios = async () => {
 
 const formatearFecha = (fecha) => new Date(fecha).toLocaleDateString();
 
-// La función cerrarSesion se queda aquí solo si tienes algún botón 
-// de cerrar sesión extra dentro de esta vista, si no, podrías borrarla.
 
 onMounted(obtenerUsuarios);
 </script>

@@ -13,7 +13,6 @@ export const crear = async (nombre, precio, stock) => {
     return result.insertId;
 };
 
-// FUNCIÓN DE ACTUALIZAR
 export const actualizar = async (id, nombre, precio, stock) => {
     const [result] = await pool.query(
         "UPDATE productos SET nombre = ?, precio = ?, stock = ? WHERE id = ?",

@@ -4,6 +4,10 @@
       <h2>Nueva Factura</h2>
     </header>
 
+    <div v-if="mensajeVenta" :class="['mensaje-venta', ventaExitosa ? 'exito' : 'error']">
+      {{ mensajeVenta }}
+    </div>
+
     <div class="factura-grid">
       <section>
         <div class="search-box">
@@ -59,7 +63,19 @@
           </div>
         </div>
 
+        <div class="search-box" style="margin-top: 12px;">
+          <label class="form-label">Método de pago</label>
+          <div class="select-wrapper">
+            <select v-model="metodoPago" class="custom-select select-primary">
+              <option value="Efectivo">Efectivo</option>
+              <option value="Tarjeta">Tarjeta</option>
+              <option value="Transferencia">Transferencia</option>
+            </select>
+          </div>
+        </div>
+
         <p style="margin-top: 15px;">Cliente: <strong>{{ nombreClienteActivo }}</strong></p>
+        <p>Método de pago: <strong>{{ metodoPago }}</strong></p>
         <hr />
         
         <div class="resumen-detalle">
@@ -98,6 +114,7 @@
         <div class="modal-body">
           <p><strong>Cliente:</strong> {{ clienteFactura }}</p>
           <p><strong>Fecha:</strong> {{ fechaFactura }}</p>
+          <p><strong>Método de pago:</strong> {{ metodoPago }}</p>
           
           <table class="tabla-modal">
             <thead>
@@ -144,7 +161,11 @@ import '@/assets/css/facturas.css';
 const productosDisponibles = ref([]);
 const carrito = ref([]);
 const clientes = ref([]);
-const clienteSeleccionado = ref(''); 
+const clienteSeleccionado = ref('');
+const metodoPago = ref('Efectivo');
+const mensajeVenta = ref('');
+const ventaExitosa = ref(false);
+let mensajeTimeout = null;
 
 // Referencias para el Modal
 const mostrarModal = ref(false);
@@ -210,12 +231,14 @@ const generarFactura = async () => {
     subtotal: calcularSubtotal.value,
     iva: calcularIVA.value,
     total: calcularTotal.value,
+    metodo_pago: metodoPago.value,
     productos: carrito.value 
   };
 
   try {
     const res = await axios.post('http://localhost:3000/api/facturas/finalizar', datosVenta);
-    
+    await cargarProductos(); // Refrescar stock inmediatamente después de la venta
+
     // Preparar datos para el Modal
     facturaReciente.value = [...carrito.value];
     clienteFactura.value = nombreClienteActivo.value;
@@ -228,6 +251,15 @@ const generarFactura = async () => {
     mostrarModal.value = true;
 
   } catch (error) {
+    if (mensajeTimeout) {
+      clearTimeout(mensajeTimeout);
+    }
+    mensajeVenta.value = 'Facturación no guardada';
+    ventaExitosa.value = false;
+    mensajeTimeout = setTimeout(() => {
+      mensajeVenta.value = '';
+      mensajeTimeout = null;
+    }, 4000);
     alert("❌ Error: " + (error.response?.data?.error || "Error al procesar la venta"));
   }
 };
@@ -236,9 +268,22 @@ const imprimir = () => { window.print(); };
 
 const cerrarModal = () => {
   mostrarModal.value = false;
-  // Limpiar vista principal para la siguiente factura
+  // Mostrar mensaje de éxito al cerrar el modal
+  if (mensajeTimeout) {
+    clearTimeout(mensajeTimeout);
+  }
+  mensajeVenta.value = 'Facturación guardada con éxito';
+  ventaExitosa.value = true;
+  mensajeTimeout = setTimeout(() => {
+    mensajeVenta.value = '';
+    ventaExitosa.value = false;
+    mensajeTimeout = null;
+  }, 4000);
+
+  
   carrito.value = [];
   clienteSeleccionado.value = '';
-  cargarProductos(); // Refrescar stock
+  metodoPago.value = 'Efectivo';
+  cargarProductos(); 
 };
 </script>

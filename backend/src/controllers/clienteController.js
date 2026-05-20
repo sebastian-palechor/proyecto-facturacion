@@ -1,6 +1,5 @@
 import * as clienteModel from "../models/clienteModel.js";
 
-// Mostrar la lista de clientes
 export const listarClientes = async (req, res) => {
     try {
         const clientes = await clienteModel.obtenerTodos();
@@ -11,7 +10,6 @@ export const listarClientes = async (req, res) => {
     }
 };
 
-// Registrar un cliente
 export const guardarCliente = async (req, res) => {
     const { nombre, telefono } = req.body;
     
@@ -45,7 +43,6 @@ export const actualizarCliente = async (req, res) => {
     }
 };
 
-// Borrar un cliente
 export const eliminarCliente = async (req, res) => {
     const { id } = req.params;
     try {

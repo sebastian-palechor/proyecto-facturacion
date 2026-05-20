@@ -10,5 +10,4 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME || 'sistema_facturacion',
 });
 
-// Exportamos el pool para que los modelos puedan usarlo
 export default pool;

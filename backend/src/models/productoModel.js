@@ -22,8 +22,7 @@ export const actualizar = async (id, nombre, precio, stock) => {
 };
 
 export const eliminar = async (id) => {
-    // Al haber cambiado la relación a SET NULL en la DB, 
-    // este query ahora funcionará aunque el producto tenga facturas.
+   
     const [result] = await pool.query("DELETE FROM productos WHERE id = ?", [id]);
     return result;
 };
